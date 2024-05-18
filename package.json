@@ -1,6 +1,6 @@
 {
     "name": "solana-test-validator-docker",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Solana docker CLI to facilitate usages of solana-test-validator, cargo and anchor",
     "keywords": [
         "solana",
