@@ -26,6 +26,9 @@
         "yarn-docker": "./bin/yarn-docker.sh"
     },
     "author": "teddy.chambard@gmail.com",
+    "repository": {
+        "url": "https://github.com/tchambard/solana-test-validator-docker"
+    },
     "license": "MIT",
     "packageManager": "yarn@4.2.2",
     "dependencies": {
