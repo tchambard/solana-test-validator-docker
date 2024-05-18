@@ -1,0 +1,9 @@
+.idea
+docker
+node_modules
+.vscode
+.yarn
+.yarnrc.yml
+src
+eslintrc.js
+.solrc

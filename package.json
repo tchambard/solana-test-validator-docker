@@ -1,0 +1,60 @@
+{
+    "name": "solana-test-validator-docker",
+    "version": "1.0.0",
+    "description": "Solana docker CLI to facilitate usages of solana-test-validator, cargo and anchor",
+    "keywords": [
+        "solana",
+        "solana-test-validator",
+        "docker",
+        "anchor",
+        "cargo"
+    ],
+    "scripts": {
+        "pre-publish": "yarn run clean-compile",
+        "clean": "rimraf build",
+        "compile": "tsc -v && tsc --pretty",
+        "compile-watch": "tsc --pretty -w",
+        "clean-compile": "yarn run clean && yarn run compile",
+        "lint": "eslint 'src/**/*.ts'",
+        "lint-fix": "eslint 'src/**/*.ts' --fix"
+    },
+    "bin": {
+        "anchor-docker": "./bin/anchor-docker.sh",
+        "cargo-docker": "./bin/cargo-docker.sh",
+        "solana-docker": "./bin/solana-docker.sh",
+        "solana-test-validator-docker": "./bin/solana-test-validator-docker.js",
+        "yarn-docker": "./bin/yarn-docker.sh"
+    },
+    "author": "teddy.chambard@gmail.com",
+    "license": "MIT",
+    "packageManager": "yarn@4.2.2",
+    "dependencies": {
+        "colors": "^1.4.0",
+        "exeunt": "^1.1.2",
+        "fs-extra": "^11.2.0",
+        "lodash": "^4.17.21",
+        "memory-streams": "^0.1.3",
+        "packpath": "^0.1.0",
+        "yargs": "^17.7.2"
+    },
+    "devDependencies": {
+        "@stylistic/eslint-plugin": "^2.1.0",
+        "@types/eslint-plugin-mocha": "^10",
+        "@types/fs-extra": "^11.0.4",
+        "@types/lodash": "^4.17.4",
+        "@types/node": "^20.12.12",
+        "@types/yargs": "^17.0.32",
+        "@typescript-eslint/eslint-plugin": "^7.9.0",
+        "@typescript-eslint/parser": "^7.9.0",
+        "eslint": "8.57.0",
+        "eslint-config-prettier": "8.10.0",
+        "eslint-plugin-import": "^2.29.1",
+        "eslint-plugin-import-newlines": "^1.4.0",
+        "eslint-plugin-jsdoc": "^48.2.5",
+        "eslint-plugin-mocha": "^10.4.3",
+        "eslint-plugin-prefer-arrow": "^1.2.3",
+        "eslint-plugin-simple-import-sort": "^12.1.0",
+        "eslint-plugin-unused-imports": "^3.2.0",
+        "typescript": "^5.4.5"
+    }
+}

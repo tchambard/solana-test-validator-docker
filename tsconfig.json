@@ -1,0 +1,23 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "outDir": "build",
+    "target": "es2022",
+    "lib": ["es2022"],
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "inlineSources": true,
+    "inlineSourceMap": true,
+    "strictNullChecks": true,
+    "noImplicitReturns": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "useDefineForClassFields": false,
+    "types": ["node"],
+    "typeRoots": ["./node_modules/@types"],
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

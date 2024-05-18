@@ -1,0 +1,13 @@
+.idea
+build
+node_modules
+/coverage/
+/.nyc_output/
+.npm_cache
+yarn-error.log
+.yarn
+!.yarn/cache
+!.yarn/releases
+!.yarn/plugins
+.vscode
+.solrc
