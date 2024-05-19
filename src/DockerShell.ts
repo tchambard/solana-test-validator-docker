@@ -25,6 +25,7 @@ export class DockerShell {
             try {
                 const workingDir = path.relative(this.config.projectRootPath, process.cwd());
                 const attachCommand = `docker exec ${process.stdout.isTTY ? '-ti' : '-t'} ` +
+                    `-u $(id -u \${USER}):$(id -g \${USER}) ` +
                     `-w="${path.join(WORKING_DIR, workingDir)}" "${containerName}" ${command}`;
                 this.logger.printLog(attachCommand);
                 execSync(attachCommand, {
@@ -43,7 +44,8 @@ export class DockerShell {
             const launchCommand = `docker run ${detached ? '-d' : `${process.stdout.isTTY ? '-ti' : '-t'}`} --rm --name "${this.config.containerName}" ` +
                 `--net=host ` +
                 `-e TZ=${Intl.DateTimeFormat().resolvedOptions().timeZone} ` +
-                `-v ${this.config.projectRootPath}:${WORKING_DIR} tchambard/solana-test-validator:latest ` +
+                `-u $(id -u \${USER}):$(id -g \${USER}) ` +
+                `-v ${this.config.projectRootPath}:${WORKING_DIR} ${this.config.imageName} ` +
                 `bash`;
 
             try {
