@@ -26,13 +26,15 @@ export class DockerShell {
                 const workingDir = path.relative(this.config.projectRootPath, process.cwd());
                 const attachCommand = `docker exec ${process.stdout.isTTY ? '-ti' : '-t'} ` +
                     `-u $(id -u \${USER}):$(id -g \${USER}) ` +
-                    `-w="${path.join(WORKING_DIR, workingDir)}" "${containerName}" ${command}`;
+                    `-w="${path.join(WORKING_DIR, workingDir)}" "${containerName}" sh -c '${command}'`;
                 this.logger.printLog(attachCommand);
                 execSync(attachCommand, {
                     stdio: [0, 1, 2],
                 });
             } catch (e) {
                 this.logger.printLog(`Container exited with code ${e.status}`);
+                this.logger.flushOuput();
+                process.exit(e.status);
             }
             return;
         }
@@ -53,6 +55,8 @@ export class DockerShell {
                 execSync(launchCommand, { stdio: [0, 1, 2] });
             } catch (e) {
                 this.logger.printLog(`Container exited with code ${e.status}`);
+                this.logger.flushOuput();
+                process.exit(e.status);
             }
             return;
         }
@@ -67,6 +71,8 @@ export class DockerShell {
                 execSync(launchCommand, { stdio: [0, 1, 2] });
             } catch (e) {
                 this.logger.printLog(`Container exited with code ${e.status}`);
+                this.logger.flushOuput();
+                process.exit(e.status);
             }
             return;
         }
