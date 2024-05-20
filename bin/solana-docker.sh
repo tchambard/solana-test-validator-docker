@@ -1,3 +1,10 @@
-#!/bin/sh
+#!/usr/bin/env node
 
-solana-test-validator-docker exec "solana $*"
+'use strict';
+
+var shell = require('shelljs');
+
+if (shell.exec(`solana-test-validator-docker exec "solana ${process.argv.slice(2)}"`).code !== 0) {
+  shell.echo('Error: solana command failed');
+  shell.exit(1);
+}
