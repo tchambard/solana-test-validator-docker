@@ -5,6 +5,7 @@ export interface IConfig {
     projectRootPath: string;
     containerName: string;
     imageName: string;
+    uid?: number;
 }
 
 const SOLANA_DOCKER_RC = '.solrc';
@@ -32,6 +33,8 @@ export async function loadConfig(): Promise<IConfig> {
         projectRootPath: path.normalize(path.dirname(configPath)).replace(/\/?$/, ''),
         imageName: config.imageName,
         containerName: config.containerName,
+        uid: config.uid,
+        gid: config.gid,
     };
 }
 
