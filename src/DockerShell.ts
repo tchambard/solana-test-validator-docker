@@ -25,9 +25,8 @@ export class DockerShell {
             try {
                 const workingDir = path.relative(this.config.projectRootPath, process.cwd());
                 const uid = this.config.uid || `$(id -u \${USER})`;
-                const gid = 1000;
                 const attachCommand = `docker exec ${process.stdout.isTTY ? '-ti' : '-t'} ` +
-                    `-u ${uid}:${gid} ` +
+                    `-u ${uid} ` +
                     `-w="${path.join(WORKING_DIR, workingDir)}" "${containerName}" sh -c '${command}'`;
                 this.logger.printLog(attachCommand);
                 execSync(attachCommand, {
@@ -46,11 +45,10 @@ export class DockerShell {
     public async start(detached: boolean): Promise<void> {
         if (!(await this.containerExists(this.config.containerName))) {
             const uid = this.config.uid || `$(id -u \${USER})`;
-            const gid = 1000;
             const launchCommand = `docker run ${detached ? '-d' : `${process.stdout.isTTY ? '-ti' : '-t'}`} --rm --name "${this.config.containerName}" ` +
                 `--net=host ` +
                 `-e TZ=${Intl.DateTimeFormat().resolvedOptions().timeZone} ` +
-                `-u ${uid}:${gid} ` +
+                `-u ${uid} ` +
                 `-v ${this.config.projectRootPath}:${WORKING_DIR} ${this.config.imageName} ` +
                 `bash`;
 

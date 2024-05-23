@@ -34,7 +34,6 @@ export async function loadConfig(): Promise<IConfig> {
         imageName: config.imageName,
         containerName: config.containerName,
         uid: config.uid,
-        gid: config.gid,
     };
 }
 
