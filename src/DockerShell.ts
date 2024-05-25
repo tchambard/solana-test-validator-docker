@@ -1,3 +1,4 @@
+import * as commandExists from 'command-exists';
 import { execSync } from 'node:child_process';
 import * as path from 'node:path';
 
@@ -5,7 +6,7 @@ import { Logger } from './Logger';
 import { Processor } from './Processor';
 import { IConfig } from './Utils';
 
-const WORKING_DIR = '/working_dir';
+const WORKING_DIR = '/opt/working_dir';
 
 export class DockerShell {
     private readonly logger: Logger;
@@ -21,23 +22,27 @@ export class DockerShell {
     public async exec(command: string): Promise<void> {
         const containerName = this.config.containerName;
 
-        if (await this.containerExists(this.config.containerName)) {
-            try {
+        try {
+            const exe = command.split(' ')[0] || command;
+            if (await this.commandExists(exe)) {
+                execSync(command, { stdio: [0, 1, 2] });
+                return;
+            }
+            else if (await this.containerExists(this.config.containerName)) {
                 const workingDir = path.relative(this.config.projectRootPath, process.cwd());
                 const uid = this.config.uid || `$(id -u \${USER})`;
                 const attachCommand = `docker exec ${process.stdout.isTTY ? '-ti' : '-t'} ` +
                     `-u ${uid} ` +
                     `-w="${path.join(WORKING_DIR, workingDir)}" "${containerName}" sh -c '${command}'`;
+
                 this.logger.printLog(attachCommand);
-                execSync(attachCommand, {
-                    stdio: [0, 1, 2],
-                });
-            } catch (e) {
-                this.logger.printLog(`Container exited with code ${e.status}`);
-                this.logger.flushOuput();
-                process.exit(e.status);
+                execSync(attachCommand, { stdio: [0, 1, 2] });
+                return;
             }
-            return;
+        } catch (e) {
+            this.logger.printLog(`Container exited with code ${e.stack}`);
+            this.logger.flushOuput();
+            process.exit(e.status);
         }
         this.logger.printError(`Container ${this.config.containerName} is not running !`);
     }
@@ -79,6 +84,15 @@ export class DockerShell {
             return;
         }
         this.logger.printWarning(`Container ${this.config.containerName} is already stopped !`);
+    }
+
+    private async commandExists(command: string): Promise<boolean> {
+        try {
+            await commandExists(command);
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 
     private async containerExists(containerName: string): Promise<boolean> {

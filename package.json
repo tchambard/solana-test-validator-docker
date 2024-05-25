@@ -1,6 +1,6 @@
 {
     "name": "solana-test-validator-docker",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "description": "Solana docker CLI to facilitate usages of solana-test-validator, cargo and anchor",
     "keywords": [
         "solana",
@@ -33,6 +33,7 @@
     "packageManager": "yarn@4.2.2",
     "dependencies": {
         "colors": "^1.4.0",
+        "command-exists": "^1.2.9",
         "exeunt": "^1.1.2",
         "fs-extra": "^11.2.0",
         "lodash": "^4.17.21",
@@ -43,6 +44,7 @@
     },
     "devDependencies": {
         "@stylistic/eslint-plugin": "^2.1.0",
+        "@types/command-exists": "^1",
         "@types/eslint-plugin-mocha": "^10",
         "@types/fs-extra": "^11.0.4",
         "@types/lodash": "^4.17.4",
@@ -60,6 +62,7 @@
         "eslint-plugin-prefer-arrow": "^1.2.3",
         "eslint-plugin-simple-import-sort": "^12.1.0",
         "eslint-plugin-unused-imports": "^3.2.0",
+        "rimraf": "^5.0.7",
         "typescript": "^5.4.5"
     }
 }
