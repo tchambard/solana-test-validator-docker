@@ -14,8 +14,10 @@ RUN corepack enable && yarn set version $VERSION_YARN
 # Install anchor
 RUN npm i -g @coral-xyz/anchor-cli@$VERSION_ANCHOR
 
-# Setup permissions on working dir
+# Setup permissions on opt and working dir
+RUN mkdir /working_dir
 RUN chown node:node /opt
+RUN chown node:node /working_dir
 
 USER node
 WORKDIR /opt
@@ -31,10 +33,11 @@ ENV SOLANA_HOME=/opt/solana-release
 RUN wget https://github.com/solana-labs/solana/releases/download/v${VERSION_SOLANA}/solana-release-x86_64-unknown-linux-gnu.tar.bz2
 RUN tar jxf solana-release-x86_64-unknown-linux-gnu.tar.bz2 --no-same-owner
 RUN rm solana-release-x86_64-unknown-linux-gnu.tar.bz2
+RUN mkdir -p ~/.cache/solana
 ENV PATH=$SOLANA_HOME/bin:$PATH
 
 # Prepare working directory
-RUN mkdir /opt/working_dir
+WORKDIR /working_dir
 
 # Setup configuration
 RUN solana config set -ud
@@ -42,4 +45,5 @@ RUN solana-keygen new --no-bip39-passphrase -s -o /opt/.config/solana/id.json &&
     solana config set --url localhost --keypair /opt/.config/solana/id.json
 
 # Launch solana-test-validator
-ENTRYPOINT solana-test-validator --ledger /opt/.config/solana/.ledger && sh
+
+ENTRYPOINT solana-test-validator --ledger /opt/.config/solana/.ledger -r --bind-address 0.0.0.0 --rpc-port 8899 && sh

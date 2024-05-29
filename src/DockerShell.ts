@@ -6,7 +6,7 @@ import { Logger } from './Logger';
 import { Processor } from './Processor';
 import { IConfig } from './Utils';
 
-const WORKING_DIR = '/opt/working_dir';
+const WORKING_DIR = '/working_dir';
 
 export class DockerShell {
     private readonly logger: Logger;
@@ -49,13 +49,17 @@ export class DockerShell {
 
     public async start(detached: boolean): Promise<void> {
         if (!(await this.containerExists(this.config.containerName))) {
+            await this.createVolume('solana-docker');
+            await this.createVolume('solana-docker-cache');
             const uid = this.config.uid || `$(id -u \${USER})`;
             const launchCommand = `docker run ${detached ? '-d' : `${process.stdout.isTTY ? '-ti' : '-t'}`} --rm --name "${this.config.containerName}" ` +
                 `--net=host ` +
                 `-e TZ=${Intl.DateTimeFormat().resolvedOptions().timeZone} ` +
                 `-u ${uid} ` +
-                `-v ${this.config.projectRootPath}:${WORKING_DIR} ${this.config.imageName} ` +
-                `bash`;
+                `-v ${this.config.projectRootPath}:${WORKING_DIR} ` +
+                '-v solana-docker:/opt ' +
+                '-v solana-docker-cache:/home/node/.cache ' +
+                `${this.config.imageName} bash`;
 
             try {
                 this.logger.printLog(launchCommand);
@@ -103,6 +107,13 @@ export class DockerShell {
         } catch (e) {
             // continue, docker $containerName not exist
             return false;
+        }
+    }
+    private async createVolume(volumeName: string): Promise<void> {
+        try {
+            await this.processor.execAndReturn(`docker volume create ${volumeName}`);
+        } catch (e) {
+            return;
         }
     }
 }
