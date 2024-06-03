@@ -52,7 +52,7 @@ export class DockerShell {
             await this.createVolume('solana-docker');
             await this.createVolume('solana-docker-cache');
             const uid = this.config.uid || `$(id -u \${USER})`;
-            const launchCommand = `docker run ${detached ? '-d' : `${process.stdout.isTTY ? '-ti' : '-t'}`} --rm --name "${this.config.containerName}" ` +
+            const launchCommand = `docker run -d ${process.stdout.isTTY ? '-ti' : '-t'} --rm --name "${this.config.containerName}" ` +
                 `--net=host ` +
                 `-e TZ=${Intl.DateTimeFormat().resolvedOptions().timeZone} ` +
                 `-u ${uid} ` +

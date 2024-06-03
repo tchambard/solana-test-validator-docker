@@ -2602,6 +2602,7 @@ __metadata:
     anchor-docker: ./bin/anchor-docker.sh
     cargo-docker: ./bin/cargo-docker.sh
     solana-docker: ./bin/solana-docker.sh
+    solana-docker-shell: ./bin/solana-docker-shell.js
     solana-test-validator-docker: ./bin/solana-test-validator-docker.js
     yarn-docker: ./bin/yarn-docker.sh
   languageName: unknown
