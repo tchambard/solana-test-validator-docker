@@ -39,11 +39,10 @@ ENV PATH=$SOLANA_HOME/bin:$PATH
 # Prepare working directory
 WORKDIR /working_dir
 
+# Disable strict mode on corepack
+ENV COREPACK_ENABLE_STRICT=0
+
 # Setup configuration
 RUN solana config set -ud
 RUN solana-keygen new --no-bip39-passphrase -s -o /opt/.config/solana/id.json &&\
     solana config set --url localhost --keypair /opt/.config/solana/id.json
-
-# Launch solana-test-validator
-
-ENTRYPOINT solana-test-validator --ledger /opt/.config/solana/.ledger -r --bind-address 0.0.0.0 --rpc-port 8899 && sh

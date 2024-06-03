@@ -27,45 +27,75 @@ In order to mount a docker volume, a `.solrc` configuration file needs to be cre
 The following command will create it.
 
 ```sh
-solana-test-validator-docker init
+solana-docker-shell init
 ```
 
-## Start solana-test-validator container
+## Start container
 
 Start the container. The directory where this command is executed must be somewhere in the project directory containing `.solrc` file
 
 ```sh
-solana-test-validator-docker start
+solana-docker-shell start
 ```
 
 
-## Stop solana-test-validator container
+## Stop container
 
 ```sh
-solana-test-validator-docker stop
+solana-docker-shell stop
 ```
 
+## Volumes
 
-## Execute a command inside solana-test-validator container
+When starting the container, three volumes are mounted:
+
+- solana-docker:/opt
+  Every tools needed are installed in `/opt` and mounted to named volume `solana-docker`.
+  This volume makes rust/cargo installations and builds caches persistent.
+
+- solana-docker-cache:/home/node/.cache
+  Some solana caches are stored in user home directory `/home/node/.cache` and mounted to named volume `solana-docker-cache`.
+  This volume makes solana caches persistent.
+
+- ${.solrc_directory}:/working_dir
+  When running `solana-docker-shell init`, a configuration file `.solrc` is created. The directory containing this file is mounted to `/working_dir`.
+
+## How to execute a command inside solana-test-validator container
 
 ```sh
-solana-test-validator-docker exec "anchor --version"
-solana-test-validator-docker exec "anchor build"
-solana-test-validator-docker exec "cargo --version"
-solana-test-validator-docker exec "yarn --version"
-solana-test-validator-docker exec "solana --version"
-solana-test-validator-docker exec "solana balance"
-solana-test-validator-docker exec "solana airdrop 2"
+solana-docker-shell exec "solana-test-validator --ledger /opt/.config/solana/.ledger -r --bind-address 0.0.0.0 --rpc-port 8899"
+solana-docker-shell exec "anchor --version"
+solana-docker-shell exec "anchor build"
+solana-docker-shell exec "cargo --version"
+solana-docker-shell exec "yarn --version"
+solana-docker-shell exec "solana --version"
+solana-docker-shell exec "solana balance"
+solana-docker-shell exec "solana airdrop 2"
 ...
 ```
 
 But simplier, you can also use directly these commands:
 
 ```sh
+# Launch solana-test-validator. Any options of classic command solana-test-validator are supported...
+solana-test-validator-docker --ledger /opt/.config/solana/.ledger -r --bind-address 0.0.0.0 --rpc-port 8899
+
+# Use anchor
 anchor-docker --version
 anchor-docker build
+...
+
+# or cargo
 cargo-docker --version
+cargo-docker build
+...
+
+# or yarn
 yarn-docker --version
+yarn-docker install
+...
+
+# or solana
 solana-docker --version
 solana-docker balance
 solana-docker airdrop 2
