@@ -2603,7 +2603,7 @@ __metadata:
     cargo-docker: ./bin/cargo-docker.sh
     solana-docker: ./bin/solana-docker.sh
     solana-docker-shell: ./bin/solana-docker-shell.js
-    solana-test-validator-docker: ./bin/solana-test-validator-docker.js
+    solana-test-validator-docker: ./bin/solana-test-validator-docker.sh
     yarn-docker: ./bin/yarn-docker.sh
   languageName: unknown
   linkType: soft
