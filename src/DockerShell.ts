@@ -24,7 +24,7 @@ export class DockerShell {
 
         try {
             const exe = command.split(' ')[0] || command;
-            if (await this.commandExists(exe)) {
+            if (this.config.bypassLocalExe && await this.commandExists(exe)) {
                 execSync(command, { stdio: [0, 1, 2] });
                 return;
             }
