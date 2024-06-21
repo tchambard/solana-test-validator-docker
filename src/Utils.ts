@@ -35,6 +35,7 @@ export async function loadConfig(): Promise<IConfig> {
         imageName: config.imageName,
         containerName: config.containerName,
         uid: config.uid,
+        bypassLocalExe: config.bypassLocalExe,
     };
 }
 
