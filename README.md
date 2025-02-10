@@ -1,6 +1,7 @@
 # Develop on Solana easily with Docker
 
 Do not install Rust, Solana and Anchor on the developer machine.
+Also bring ZK compression with light-protocol
 You only need to install Docker.
 
 [dockerhub](https://hub.docker.com/r/tchambard/solana-test-validator)
@@ -63,7 +64,7 @@ When starting the container, three volumes are mounted:
 ## How to execute a command inside solana-test-validator container
 
 ```sh
-solana-docker-shell exec "solana-test-validator --ledger /opt/.config/solana/.ledger -r --bind-address 0.0.0.0 --rpc-port 8899"
+solana-docker-shell exec "solana-test-validator --ledger ~/.config/solana/.ledger -r --bind-address 0.0.0.0 --rpc-port 8899"
 solana-docker-shell exec "light-test-validator"
 solana-docker-shell exec "anchor --version"
 solana-docker-shell exec "anchor build"
@@ -79,7 +80,7 @@ But simplier, you can also use directly these commands:
 
 ```sh
 # Launch solana-test-validator. Any options of classic command solana-test-validator are supported...
-solana-test-validator-docker --ledger /opt/.config/solana/.ledger -r --bind-address 0.0.0.0 --rpc-port 8899
+solana-test-validator-docker --ledger ~/.config/solana/.ledger -r --bind-address 0.0.0.0 --rpc-port 8899
 # Launch light protocol + photon
 light-test-validator-docker
 
@@ -108,5 +109,3 @@ light-docker --version
 light-docker init
 ...
 ```
-
-#

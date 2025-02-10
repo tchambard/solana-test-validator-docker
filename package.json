@@ -7,7 +7,8 @@
         "solana-test-validator",
         "docker",
         "anchor",
-        "cargo"
+        "cargo",
+        "light-protocol"
     ],
     "scripts": {
         "pre-publish": "yarn run clean-compile",
