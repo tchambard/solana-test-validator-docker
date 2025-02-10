@@ -47,7 +47,7 @@ export class DockerShell {
         this.logger.printError(`Container ${this.config.containerName} is not running !`);
     }
 
-    public async start(detached: boolean): Promise<void> {
+    public async start(): Promise<void> {
         if (!(await this.containerExists(this.config.containerName))) {
             await this.createVolume('solana-docker');
             await this.createVolume('solana-docker-cache');

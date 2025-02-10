@@ -21,9 +21,11 @@
     "bin": {
         "anchor-docker": "./bin/anchor-docker.sh",
         "cargo-docker": "./bin/cargo-docker.sh",
+        "light-docker": "./bin/light-docker.sh",
+        "light-test-validator-docker": "./bin/light-test-validator-docker.sh",
         "solana-docker": "./bin/solana-docker.sh",
         "solana-docker-shell": "./bin/solana-docker-shell.js",
-        "solana-test-validator-docker": "./bin/solana-test-validator-docker.js",
+        "solana-test-validator-docker": "./bin/solana-test-validator-docker.sh",
         "yarn-docker": "./bin/yarn-docker.sh"
     },
     "author": "teddy.chambard@gmail.com",

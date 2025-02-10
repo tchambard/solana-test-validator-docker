@@ -45,17 +45,8 @@ type YargsGlobalArgs = {
                 await dockerShell.exec(argv.command as string);
             })
         .command('start', 'Start solana-test-validator docker container',
-            (args) => {
-                return args
-                    .option('detached', {
-                        alias: 'd',
-                        demandOption: false,
-                        describe: 'Run container in detached mode',
-                        boolean: true,
-                        default: false,
-                    });
-            }, async (argv) => {
-                await dockerShell.start(argv.interactive as boolean);
+            () => _.noop(), async () => {
+                await dockerShell.start();
             })
         .command('stop', 'Stop solana-test-validator docker container',
             () => _.noop(), async () => {

@@ -64,6 +64,7 @@ When starting the container, three volumes are mounted:
 
 ```sh
 solana-docker-shell exec "solana-test-validator --ledger /opt/.config/solana/.ledger -r --bind-address 0.0.0.0 --rpc-port 8899"
+solana-docker-shell exec "light-test-validator"
 solana-docker-shell exec "anchor --version"
 solana-docker-shell exec "anchor build"
 solana-docker-shell exec "cargo --version"
@@ -79,6 +80,8 @@ But simplier, you can also use directly these commands:
 ```sh
 # Launch solana-test-validator. Any options of classic command solana-test-validator are supported...
 solana-test-validator-docker --ledger /opt/.config/solana/.ledger -r --bind-address 0.0.0.0 --rpc-port 8899
+# Launch light protocol + photon
+light-test-validator-docker
 
 # Use anchor
 anchor-docker --version
@@ -99,6 +102,10 @@ yarn-docker install
 solana-docker --version
 solana-docker balance
 solana-docker airdrop 2
+
+# or light cli
+light-docker --version
+light-docker init
 ...
 ```
 

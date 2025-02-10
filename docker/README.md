@@ -2,8 +2,8 @@
 ## build docker images
 
 ```sh
-# solana base image with anchor, nodejs, yarn...
-docker build . -t tchambard/solana-test-validator:solana_1.18.12-anchor_0.30.0 -t tchambard/solana-test-validator:latest
+# solana base image with anchor, nodejs, yarn, light and photon...
+docker build . -t tchambard/solana-test-validator:solana_1.18.26-anchor_0.30.1-light_0.22.0 -t tchambard/solana-test-validator:latest
 ```
 
 ## run solana-test-validator
